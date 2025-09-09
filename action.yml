@@ -1,3 +1,4 @@
+---
 name: Extract Power BI Metadata via XMLA Endpoint
 description: Extracts metadata from a Power BI workspace using the XMLA endpoint and uploads it as an artifact.
 
