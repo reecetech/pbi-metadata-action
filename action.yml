@@ -27,12 +27,12 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.100'
-    
+
     - name: Create project and install NuGet package
       shell: bash
       run: |
-        mkdir PowerBIMetadataExtractor    
-        cd PowerBIMetadataExtractor    
+        mkdir PowerBIMetadataExtractor
+        cd PowerBIMetadataExtractor
         dotnet new console --output .
         dotnet add package Azure.Core
         dotnet add package Azure.Identity
@@ -58,7 +58,7 @@ runs:
         CLIENT_SECRET: ${{ inputs.client_secret }}
       shell: bash
       run: |
-        cd PowerBIMetadataExtractor    
+        cd PowerBIMetadataExtractor
         dotnet run
 
     - uses: actions/upload-artifact@v4
