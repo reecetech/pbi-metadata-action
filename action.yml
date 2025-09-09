@@ -1,0 +1,67 @@
+name: Extract Power BI Metadata via XMLA Endpoint
+description: Extracts metadata from a Power BI workspace using the XMLA endpoint and uploads it as an artifact.
+
+inputs:
+  workspace_name:
+    description: 'Name of the Power BI workspace'
+    required: true
+  tenant_id:
+    description: 'Azure AD Tenant ID'
+    required: true
+  client_id:
+    description: 'Azure AD Application (Client) ID'
+    required: true
+  client_secret:
+    description: 'Azure AD Application Client Secret'
+    required: true
+
+outputs:
+  name:
+    description: 'Name of the uploaded metadata artifact'
+    value: ${{ steps.set-artifact.outputs.artifact-name }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.100'
+    
+    - name: Create project and install NuGet package
+      shell: bash
+      run: |
+        mkdir PowerBIMetadataExtractor    
+        cd PowerBIMetadataExtractor    
+        dotnet new console --output .
+        dotnet add package Azure.Core
+        dotnet add package Azure.Identity
+        dotnet add package Microsoft.AnalysisServices
+
+    - name: Copy C# script
+      shell: bash
+      run: |
+        cp src/PowerBIMetaDataExtractor.cs ./PowerBIMetadataExtractor/Program.cs
+
+    - name: Set artifact name
+      id: set-artifact
+      shell: bash
+      run: |
+        echo "artifact-name=${{ inputs.workspace_name }}-metadata-$(date +%s)" >> $GITHUB_OUTPUT
+
+    - name: Run C# script with parameters
+      env:
+        WORKSPACE_NAME: ${{ inputs.workspace_name }}
+        ARTIFACT_NAME: ${{ steps.set-artifact.outputs.artifact-name }}
+        TENANT_ID: ${{ inputs.tenant_id }}
+        CLIENT_ID: ${{ inputs.client_id }}
+        CLIENT_SECRET: ${{ inputs.client_secret }}
+      shell: bash
+      run: |
+        cd PowerBIMetadataExtractor    
+        dotnet run
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.set-artifact.outputs.artifact-name }}
+        path: ./PowerBIMetadataExtractor/${{ steps.set-artifact.outputs.artifact-name }}.json
