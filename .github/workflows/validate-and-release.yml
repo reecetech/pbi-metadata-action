@@ -36,12 +36,11 @@ jobs:
         name: Calculate next version 🔢
         uses: reecetech/version-increment@2024.10.1
 
-      - id: release
+      - id: github-release
         name: Create Github Release 📦
-        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
+        uses: softprops/action-gh-release@v2.3.3
         with:
           tag_name: ${{ steps.version.outputs.version }}
           prerelease: true
           draft: false
-          body: ${{ github.event.head_commit.message }}
           token: ${{ secrets.GITHUB_TOKEN }}
