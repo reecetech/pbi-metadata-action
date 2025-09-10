@@ -26,9 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: reecetech/pbi-metadata-action@v1
+      - uses: reecetech/pbi-metadata-action@0.0.1
         with:
-          workspace_name: 'FinanceWorkspace'
+          workspace_name: ${{ inputs.workspace_name }}
           tenant_id: ${{ secrets.TENANT_ID }}
           client_id: ${{ secrets.CLIENT_ID }}
           client_secret: ${{ secrets.CLIENT_SECRET }}
