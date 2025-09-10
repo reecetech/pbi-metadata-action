@@ -65,7 +65,7 @@ runs:
         cd PowerBIMetadataExtractor
         dotnet run
 
-    - uses: actions/upload-artifact@v4 📦
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.set-artifact.outputs.artifact-name }}
         path: ./PowerBIMetadataExtractor/${{ steps.set-artifact.outputs.artifact-name }}.json
