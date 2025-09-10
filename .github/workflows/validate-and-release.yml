@@ -33,8 +33,6 @@ jobs:
       - id: checkout
         name: Checkout code 🛒
         uses: actions/checkout@v4
-        with:
-          ref: reecetech/initial-setup
 
       - id: version
         name: Calculate next version 🔢
