@@ -33,6 +33,8 @@ jobs:
       - id: checkout
         name: Checkout code 🛒
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - id: version
         name: Calculate next version 🔢
