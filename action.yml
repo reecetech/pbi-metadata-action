@@ -65,7 +65,7 @@ runs:
         CLIENT_SECRET: ${{ inputs.client_secret }}
       shell: bash
       run: |
-        dotnet run --project ./src/PowerBIMetadataExtractor.csproj
+        dotnet run --project ./src/PowerBIMetaDataExtractor.csproj
 
     - uses: actions/upload-artifact@v4
       with:
