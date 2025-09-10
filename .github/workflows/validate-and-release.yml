@@ -23,7 +23,7 @@ jobs:
           strict: true
 
   release:
-    if: ${{ github.ref_name == github.event.repository.default_branch }}
+    # if: ${{ github.ref_name == github.event.repository.default_branch }}
     needs:
       - lint
     runs-on: ubuntu-latest
@@ -38,11 +38,10 @@ jobs:
 
       - id: release
         name: Create Github Release 📦
-        if: ${{ github.ref_name == github.event.repository.default_branch }}
         uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
           tag_name: ${{ steps.version.outputs.version }}
-          prerelease: false
+          prerelease: true
           draft: false
           body: ${{ github.event.head_commit.message }}
           token: ${{ secrets.GITHUB_TOKEN }}
