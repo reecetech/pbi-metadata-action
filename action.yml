@@ -42,7 +42,7 @@ runs:
     - name: Copy C# script
       shell: bash
       run: |
-        cp src/PowerBIMetaDataExtractor.cs ./PowerBIMetadataExtractor/Program.cs
+        cp ./src/PowerBIMetaDataExtractor.cs ./PowerBIMetadataExtractor/Program.cs
 
     - name: Set artifact name
       id: set-artifact
