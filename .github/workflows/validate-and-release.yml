@@ -27,6 +27,8 @@ jobs:
     needs:
       - lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - id: checkout
         name: Checkout code 🛒
