@@ -34,7 +34,7 @@ jobs:
         name: Checkout code 🛒
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.ref_name }}
 
       - id: version
         name: Calculate next version 🔢
