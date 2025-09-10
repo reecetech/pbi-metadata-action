@@ -1,5 +1,5 @@
 ---
-name: Extract Power BI Metadata via XMLA Endpoint
+name: Extract Power BI Metadata via XMLA Endpoint 🚀
 description: Extracts metadata from a Power BI workspace using the XMLA endpoint and uploads it as an artifact.
 
 inputs:
@@ -24,15 +24,15 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout action repo
+    - name: Checkout action repo 📥 
       uses: actions/checkout@v4
 
-    - name: Install .NET SDK
+    - name: Install .NET SDK 🛠️
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.100'
 
-    - name: Create project and install NuGet package
+    - name: Create project and install NuGet package 🧱
       shell: bash
       run: |
         mkdir PowerBIMetadataExtractor
@@ -42,18 +42,18 @@ runs:
         dotnet add package Azure.Identity
         dotnet add package Microsoft.AnalysisServices
 
-    - name: Copy C# script
+    - name: Copy C# script 📄
       shell: bash
       run: |
         cp ./src/PowerBIMetaDataExtractor.cs ./PowerBIMetadataExtractor/Program.cs
 
-    - name: Set artifact name
+    - name: Set artifact name 🏷️
       id: set-artifact
       shell: bash
       run: |
         echo "artifact-name=${{ inputs.workspace_name }}-metadata-$(date +%s)" >> $GITHUB_OUTPUT
 
-    - name: Run C# script with parameters
+    - name: Run C# script with parameters ▶️
       env:
         WORKSPACE_NAME: ${{ inputs.workspace_name }}
         ARTIFACT_NAME: ${{ steps.set-artifact.outputs.artifact-name }}
@@ -65,7 +65,7 @@ runs:
         cd PowerBIMetadataExtractor
         dotnet run
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v4 📦
       with:
         name: ${{ steps.set-artifact.outputs.artifact-name }}
         path: ./PowerBIMetadataExtractor/${{ steps.set-artifact.outputs.artifact-name }}.json
