@@ -24,7 +24,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout action repo 📥 
+    - name: Checkout action repo 📥
       uses: actions/checkout@v4
 
     - name: Install .NET SDK 🛠️
