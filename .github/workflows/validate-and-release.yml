@@ -37,20 +37,12 @@ jobs:
         uses: reecetech/version-increment@2024.10.1
 
       - id: release
+        name: Create Github Release 📦
         if: ${{ github.ref_name == github.event.repository.default_branch }}
-        name: Release version 📦
-        uses: marvinpinto/action-automatic-releases@919008cf3f741b179569b7a6fb4d8860689ab7f0
+        uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          draft: false
+          tag_name: ${{ steps.version.outputs.version }}
           prerelease: false
-          automatic_release_tag: "${{ steps.version.outputs.v-version }}"
-
-      - id: update-major-tag
-        if: ${{ github.ref_name == github.event.repository.default_branch }}
-        name: Update the major version tag 🏷
-        uses: richardsimko/update-tag@v1
-        with:
-          tag_name: ${{ steps.version.outputs.major-v-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          body: ${{ github.event.head_commit.message }}
+          token: ${{ secrets.GITHUB_TOKEN }}
