@@ -28,6 +28,7 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: reecetech/pbi-metadata-action
+        ref: reecetech/initial-setup
 
     - name: Install .NET SDK
       uses: actions/setup-dotnet@v4
