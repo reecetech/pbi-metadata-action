@@ -54,4 +54,4 @@ runs:
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.set-artifact.outputs.artifact-name }}
-        path: ./src/${{ steps.set-artifact.outputs.artifact-name }}.json
+        path: ${{ steps.set-artifact.outputs.artifact-name }}.json
