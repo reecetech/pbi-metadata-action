@@ -1,0 +1,48 @@
+---
+name: Validate and Release
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: Checkout code 🛒
+        uses: actions/checkout@v4
+
+      - id: yamllint
+        name: Run yamllint 📃
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          strict: true
+
+  release:
+    if: ${{ github.ref_name == github.event.repository.default_branch }}
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - id: checkout
+        name: Checkout code 🛒
+        uses: actions/checkout@v4
+
+      - id: version
+        name: Calculate next version 🔢
+        uses: reecetech/version-increment@2024.10.1
+
+      - id: github-release
+        name: Create Github Release 📦
+        uses: softprops/action-gh-release@v2.3.3
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          prerelease: true
+          draft: false
+          token: ${{ secrets.GITHUB_TOKEN }}
